@@ -1,13 +1,14 @@
-from flask import render_template
-from app import app#, db, posts
-# from app.forms import LoginForm, RegistrationForm
-# from app.models import User
-# from app.posts import Posts
+from urllib.parse import urlparse
+from flask import render_template, flash, redirect, url_for, request
+from flask_login import login_user, current_user, logout_user, login_required
+from app import app, db
+from app.forms import LoginForm
+from app.models import User
+from app.services.auth import login_helper, logout_helper
 
 # Main links that return a webpage
 @app.route('/')
 @app.route('/index')
-# @login_required
 def index():
     return render_template("base.html", title="Home | Posts")
 
@@ -16,6 +17,7 @@ def posts():
     #TODO update template
     return render_template("base.html", title="Home | Posts") 
 
+@login_required
 @app.route('/posts/create')
 def create_post():
     #TODO update template
@@ -26,10 +28,13 @@ def post(post_id):
     #TODO update template
     return render_template("base.html", title="Home | Posts")
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    #TODO update template
-    return render_template("base.html", title="Home | Posts")
+    return login_helper()
+
+@app.route('/logout')
+def logout():
+    return logout_helper()
 
 @app.route('/register')
 def register():
