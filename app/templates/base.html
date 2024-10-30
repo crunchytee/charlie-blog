@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    {% block head %} {% if title %}
+    <title>{{ title }} | microblog</title>
+    {% else %}
+    <title>microblog</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    {% endif %} {% endblock %}
+  </head>
+  <body>
+    <header>{% include "_navbar.html"%}</header>
+    {% with messages = get_flashed_messages()%} {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+    <div class="content">{% block content %} {% endblock %}</div>
+    baked bean
+  </body>
+</html>
