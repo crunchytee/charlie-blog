@@ -13,8 +13,8 @@
     {% endif %} {% endblock %}
   </head>
   <body>
-    <header>{% include "_navbar.html"%}</header>
-    {% with messages = get_flashed_messages()%} {% if messages %}
+    {% include "_navbar.html"%} {% with messages = get_flashed_messages()%} {%
+    if messages %}
     <ul>
       {% for message in messages %}
       <li>{{ message }}</li>
@@ -22,6 +22,6 @@
     </ul>
     {% endif %} {% endwith %}
     <div class="content">{% block content %} {% endblock %}</div>
-    baked bean
+    baked bean {% include "_footer.html" %}
   </body>
 </html>
