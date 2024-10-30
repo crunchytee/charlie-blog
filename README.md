@@ -67,12 +67,38 @@ pip install -r requirements.txt
 
 \*_This may take a minute_
 
-### Launch project
+### Configuration file
 
-Finally, the project is ready to roll! To start the webserver, simply run the start command:
+You will need a configuration file. Add a config.py file to the root directory, and add the required configuration elements. Here is an example:
+
+config.py:
 
 ```
-flask run
+import os
+basedir = os.path.abspath(os.path.dirname(__file__))
+class Config(object):
+    SECRET_KEY = os.environ.get("SECRET_KEY") or "you-will-never-guess"
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL") or \
+        "sqlite:///" + os.path.join(basedir, "app.db")
+    SQLALCHEMY_TRACK_MODIFICATIONS= False
+```
+
+### Configure database
+
+This project uses the flask-sqlalchemy ORM for database interactions, and the flask-migrate package for migrations. To initialize the database:
+
+```
+flask db init
+flask db upgrade
+
+```
+
+### Launch project
+
+Finally, the project is ready to roll! To start the webserve in development mode, simply run the start command:
+
+```
+flask --app app run --debug
 ```
 
 You should get a response warning of development server, and a link to see the live site. This is typically something like:
