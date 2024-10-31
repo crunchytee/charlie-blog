@@ -1,4 +1,4 @@
-# Flask Example project
+# Project Charlie Blog
 
 #### This document written by TRB
 
