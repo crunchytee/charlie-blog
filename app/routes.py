@@ -4,7 +4,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from app import app, db
 from app.forms import LoginForm
 from app.models import User
-from app.services.auth import login_helper, logout_helper
+from app.services.auth import login_helper, logout_helper, registration_helper
 
 # Main links that return a webpage
 @app.route('/')
@@ -17,8 +17,8 @@ def posts():
     #TODO update template
     return render_template("base.html", title="Home | Posts") 
 
-@login_required
 @app.route('/posts/create')
+@login_required
 def create_post():
     #TODO update template
     return render_template("base.html", title="Home | Posts") 
@@ -28,6 +28,7 @@ def post(post_id):
     #TODO update template
     return render_template("base.html", title="Home | Posts")
 
+# Auth
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     return login_helper()
@@ -36,10 +37,9 @@ def login():
 def logout():
     return logout_helper()
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    #TODO update template
-    return render_template("base.html", title="Home | Posts")
+    return registration_helper()
 
 @app.route('/about')
 def about():
@@ -58,16 +58,19 @@ def contact():
 
 # Functional routes
 @app.route('/post/<post_id>/like')
+@login_required
 def like_post(post_id):
     #TODO update template
     return render_template("base.html", title="Home | Posts")
 
 @app.route('/post/<post_id>/dislike')
+@login_required
 def dislike_post(post_id):
     #TODO update template
     return render_template("base.html", title="Home | Posts")
 
 @app.route('/post/<post_id>/comment')
+@login_required
 def comment(post_id):
     #TODO update template
     return render_template("base.html", title="Home | Posts")

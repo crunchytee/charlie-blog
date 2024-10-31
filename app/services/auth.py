@@ -1,8 +1,8 @@
 from urllib.parse import urlparse
 from flask import render_template, flash, redirect, url_for, request
-from flask_login import login_user, current_user, logout_user, login_required
+from flask_login import login_user, current_user, logout_user
 from app import app, db
-from app.forms import LoginForm
+from app.forms import LoginForm, RegistrationForm
 from app.models import User
 
 def login_helper():
@@ -34,3 +34,21 @@ def logout_helper():
     # Log out user and send them back to the homepage
     logout_user()
     return render_template("index.html", title="Home | Charlie")
+
+def registration_helper():
+    # Check if user is logged in. If so, take them to the homepage. They shouldn't be registering for an account if they're loggedn in already
+    if current_user.is_authenticated:
+        return redirect(url_for("index"))
+    
+    # Post request, handle login
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(email = form.email.data, username = form.username.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash("Registration successful!")
+        return redirect(url_for("login"))
+    
+    # Get request, show registration form
+    return render_template("register.html", title="Registration", form=form)

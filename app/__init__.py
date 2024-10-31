@@ -9,6 +9,7 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
+login.login_message = "Oops! You'll need to log in to do that"
 login.login_view = "login"
 
 from app import routes, models
