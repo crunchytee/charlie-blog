@@ -1,0 +1,13 @@
+<header>
+  <a href="{{ url_for('index') }}">Home</a>
+  <a href="{{ url_for('posts') }}">Posts</a>
+  <a href="{{ url_for('about') }}">About</a>
+  <a href="{{ url_for('credits') }}">Credits</a>
+  <a href="{{ url_for('contact') }}">Contact</a>
+  {% if current_user.is_anonymous %}
+  <a href="{{ url_for('login') }}">Log In</a>
+  {% else %}
+  <a href="{{ url_for('create_post') }}">Create Post</a>
+  <a href="{{ url_for('logout') }}">Log Out</a>
+  {% endif %}
+</header>
