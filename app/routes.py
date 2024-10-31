@@ -5,6 +5,7 @@ from app import app, db
 from app.forms import LoginForm
 from app.models import User
 from app.services.auth import login_helper, logout_helper, registration_helper
+from app.services.posts import add_post
 
 # Main links that return a webpage
 @app.route('/')
@@ -21,7 +22,7 @@ def posts():
 @login_required
 def create_post():
     #TODO update template
-    return render_template("base.html", title="Home | Posts") 
+    return add_post()
 
 @app.route('/post/<post_id>')
 def post(post_id):

@@ -25,7 +25,7 @@ def login_helper():
         next_page = request.args.get("next")
         if not next_page or urlparse(next_page).netloc != "":
             next_page = url_for("index")
-        return redirect(url_for('index'))
+        return redirect(next_page)
     
     # User requesting login form, show login page
     return render_template("login.html", title="Login", form=form)
