@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, current_user, logout_user, login_required
 from app import app, db
 from app.forms import LoginForm
-from app.models import User
+from app.models import User, Post
 from app.services.auth import login_helper, logout_helper, registration_helper
 from app.services.posts import add_post
 
@@ -11,17 +11,17 @@ from app.services.posts import add_post
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template("base.html", title="Home | Posts")
+    posts = Post.query.all()
+    return render_template("index.html", title="Home | Posts", posts=posts)
 
 @app.route('/posts')
 def posts():
     #TODO update template
     return render_template("base.html", title="Home | Posts") 
 
-@app.route('/posts/create')
+@app.route('/posts/create', methods=['GET', 'POST'])
 @login_required
 def create_post():
-    #TODO update template
     return add_post()
 
 @app.route('/post/<post_id>')

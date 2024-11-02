@@ -1,9 +1,27 @@
 {% extends "base.html" %} {% block content %}
 <h1 id="title">Hi, {{ current_user.username }}!</h1>
 {% for post in posts %}
-<div>
-  <h3>By: {{ post.author.username }}</h3>
-  <p>{{ post.body }}</p>
+<div
+  style="
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 1px;
+    background-color: #ebebeb;
+    margin: 5px;
+    padding: 10px;
+  "
+>
+  {% if post.title %}
+  <h2>{{ post.title[0]|upper }}{{ post.title[1:] }}</h2>
+  {% else %}
+  <h2>No title</h2>
+  {% endif %}
+  <h3>
+    By: {{ post.author.username }} on {{ post.timestamp.month }}/{{
+    post.timestamp.day }}/{{ post.timestamp.year }}
+  </h3>
+  <p>{{ post.body_html | safe }}</p>
+  <p>Likes: {{post.likes}} Dislikes: {{ post.dislikes }}</p>
 </div>
 {% endfor %}
 <script>

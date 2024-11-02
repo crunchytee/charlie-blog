@@ -13,7 +13,7 @@ def add_post():
         post = Post(
             title = form.title.data,
             body_html = form.body_html.data,
-            user_id = current_user,
+            user_id = current_user.id,
             likes = 0,
             dislikes = 0
             )
@@ -24,3 +24,5 @@ def add_post():
     
     # Get request, show add post form
     return render_template("add_post.html", title="Add Post", form=form)
+
+# Delete posts
