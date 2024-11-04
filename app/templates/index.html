@@ -23,7 +23,8 @@
   <p>{{ post.body_html | safe }}</p>
   {% if post.user_id == current_user.id %}
   <p>Likes: {{post.likes}} Dislikes: {{ post.dislikes }}</p>
-  <a href="/post/{{post.id}}/edit">Edit Post</a>
+  <a href="/post/{{post.id}}/edit">Edit</a>
+  <a href="/post/{{post.id}}/delete">Delete</a>
   {% else %}
   <p>Likes: {{post.likes}} Dislikes: {{ post.dislikes }}</p>
   <a href="/post/{{post.id}}/like">Like</a>

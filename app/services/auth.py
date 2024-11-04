@@ -55,6 +55,8 @@ def registration_helper():
 
 # Safe user function. User has to be found and match current user
 def is_user_valid(user_id):
+    if current_user.is_anonymous:
+        return False
     user = User.query.filter_by(id = user_id).first()
     if user is None or user.username != current_user.username:
         return False

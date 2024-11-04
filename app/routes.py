@@ -5,7 +5,7 @@ from app import app, db
 from app.forms import LoginForm
 from app.models import User, Post
 from app.services.auth import login_helper, logout_helper, registration_helper
-from app.services.posts import add_post, update_post
+from app.services.posts import add_post, update_post, delete_post
 
 # Main links that return a webpage
 @app.route('/')
@@ -32,6 +32,10 @@ def post(post_id):
 @app.route('/post/<post_id>/edit', methods=['GET', 'POST'])
 def edit_post(post_id):
     return update_post(post_id)
+
+@app.route('/post/<post_id>/delete', methods=['GET', 'POST'])
+def remove_post(post_id):
+    return delete_post(post_id)
 
 # Auth
 @app.route('/login', methods=['GET', 'POST'])

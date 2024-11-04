@@ -47,4 +47,18 @@ def update_post(post_id):
     # Get request, show update post form. Post information is handed to template to be prefilled
     return render_template("update_post.html", title="Update Post", form=form, post=post)
 
+def delete_post(post_id):
+    # Check for no post / authentication issue
+    post = Post.query.filter_by(id=post_id).first()
+
+    if post is None or not is_user_valid(post.user_id):
+        flash("Oops! You can't do that. Try logging in.")
+        return redirect(url_for("index"))
+    
+    db.session.delete(post)
+    db.session.commit()
+    flash("Post Deleted")
+    return redirect(url_for("index"))
+
+
 # Delete posts
