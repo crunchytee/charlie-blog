@@ -27,6 +27,6 @@ class RegistrationForm(FlaskForm):
             raise ValidationError("Email taken. Please use a different email.")
 
 class PostForm(FlaskForm):
-    title = StringField("Post title", validators=[DataRequired(), Length(2, 50, "Post title must be within 2 and 50 characters")])
+    title = StringField("Post title", validators=[DataRequired(), Length(2, 300, "Post title must be within 2 and 300 characters")])
     body_html = TextAreaField("HTML Post content", validators=[DataRequired(), Length(2, 30000, "Post must be within 2 and 30,000 characters")])
     submit = SubmitField("Post")

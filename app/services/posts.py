@@ -60,5 +60,10 @@ def delete_post(post_id):
     flash("Post Deleted")
     return redirect(url_for("index"))
 
+def view_post(post_id):
+    # Get post - return 404 if no post
+    post = Post.query.filter_by(id=post_id).first_or_404()
+    truncated_title = post.title if len(post.title) < 50 else (post.title[:47] + "...")
+    return render_template("post.html", title=truncated_title, post=post)
 
 # Delete posts
