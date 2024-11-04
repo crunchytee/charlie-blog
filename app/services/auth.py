@@ -52,3 +52,10 @@ def registration_helper():
     
     # Get request, show registration form
     return render_template("register.html", title="Registration", form=form)
+
+# Safe user function. User has to be found and match current user
+def is_user_valid(user_id):
+    user = User.query.filter_by(id = user_id).first()
+    if user is None or user.username != current_user.username:
+        return False
+    return True
