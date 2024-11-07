@@ -33,7 +33,7 @@ def login_helper():
 def logout_helper():
     # Log out user and send them back to the homepage
     logout_user()
-    return render_template("index.html", title="Home | Charlie")
+    return redirect(url_for("index"))
 
 def registration_helper():
     # Check if user is logged in. If so, take them to the homepage. They shouldn't be registering for an account if they're loggedn in already

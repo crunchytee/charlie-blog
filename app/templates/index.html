@@ -21,15 +21,22 @@
     post.timestamp.day }}/{{ post.timestamp.year }}
   </h3>
   <p>{{ post.body_html | safe }}</p>
+  <p>Likes: {{post.likes}} Dislikes: {{ post.dislikes }}</p>
   <a href="/post/{{post.id}}">View Full Post</a>
   {% if post.user_id == current_user.id %}
-  <p>Likes: {{post.likes}} Dislikes: {{ post.dislikes }}</p>
-  <a href="/post/{{post.id}}/edit">Edit</a>
-  <a href="/post/{{post.id}}/delete">Delete</a>
-  {% else %}
-  <p>Likes: {{post.likes}} Dislikes: {{ post.dislikes }}</p>
-  <a href="/post/{{post.id}}/like">Like</a>
-  <a href="/post/{{post.id}}/dislike">Dislike</a>
+  <div
+    style="
+      border-style: solid;
+      border-radius: 5px;
+      border-width: 1px;
+      margin: 5px;
+      padding: 10px;
+    "
+  >
+    <p>Administration</p>
+    <a href="/post/{{post.id}}/edit">Edit</a>
+    <a href="/post/{{post.id}}/delete">Delete</a>
+  </div>
   {% endif %}
 </div>
 {% endfor %}

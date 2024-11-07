@@ -27,7 +27,7 @@ def create_post():
     return add_post()
 
 # View post
-@app.route('/post/<post_id>')
+@app.route('/post/<post_id>', methods=['GET', 'POST'])
 def post(post_id):
     return view_post(post_id)
 
@@ -82,6 +82,18 @@ def like_post(post_id):
 @app.route('/post/<post_id>/dislike')
 @login_required
 def dislike_post(post_id):
+    #TODO update template
+    return render_template("base.html", title="Home | Posts")
+
+@app.route('/comment/<comment_id>/like')
+@login_required
+def like_comment(comment_id):
+    #TODO update template
+    return render_template("base.html", title="Home | Posts")
+
+@app.route('/comment/<comment_id>/dislike')
+@login_required
+def dislike_comment(comment_id):
     #TODO update template
     return render_template("base.html", title="Home | Posts")
 

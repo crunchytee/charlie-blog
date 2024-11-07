@@ -19,14 +19,65 @@
     post.timestamp.day }}/{{ post.timestamp.year }}
   </h3>
   <p>{{ post.body_html | safe }}</p>
+  <p>Likes: {{post.likes}} Dislikes: {{ post.dislikes }}</p>
   {% if post.user_id == current_user.id %}
-  <p>Likes: {{post.likes}} Dislikes: {{ post.dislikes }}</p>
-  <a href="/post/{{post.id}}/edit">Edit</a>
-  <a href="/post/{{post.id}}/delete">Delete</a>
+  <div
+    style="
+      border-style: solid;
+      border-radius: 5px;
+      border-width: 1px;
+      margin: 5px;
+      padding: 10px;
+    "
+  >
+    <p>Administration</p>
+    <a href="/post/{{post.id}}/edit">Edit</a>
+    <a href="/post/{{post.id}}/delete">Delete</a>
+  </div>
   {% else %}
-  <p>Likes: {{post.likes}} Dislikes: {{ post.dislikes }}</p>
   <a href="/post/{{post.id}}/like">Like</a>
   <a href="/post/{{post.id}}/dislike">Dislike</a>
+  {% endif %} {% if post.comments %} {% for comment in post.comments %}
+  <div>
+    <h4>{{ comment.author.username }}</h4>
+    <p>
+      On {{ comment.timestamp.month }}/{{ comment.timestamp.day }}/{{
+      comment.timestamp.year }}
+    </p>
+    <p>{{ comment.comment }}</p>
+    {% if comment.user_id == current_user.id %}
+    <p>Likes: {{comment.likes}} Dislikes: {{ comment.dislikes }}</p>
+    {% else %}
+    <p>Likes: {{comment.likes}} Dislikes: {{ comment.dislikes }}</p>
+    <a href="/post/{{comment.id}}/like">Like</a>
+    <a href="/post/{{comment.id}}/dislike">Dislike</a>
+    {% endif %}
+  </div>
+  {% endfor %} {% else %}
+  <div><p>No Comments. Add yours!</p></div>
   {% endif %}
+  <button id="show-comment-form">Add Comment</button>
+  <div style="display: block">
+    {% if current_user.is_anonymous %}
+    <p>
+      You need to
+      <a href="{{url_for('login')}}?next=/post/{{post.id}}">Login</a> before you
+      can add a comment.
+    </p>
+    {% else %}
+    <h1>test</h1>
+    <form action="" method="post">
+      {{ form.hidden_tag() }}
+      <p>
+        {{ form.comment.label }}<br />
+        {{ form.comment(size=32) }}<br />
+        {% for error in form.comment.errors %}
+        <span style="color: red">{{ error }}</span>
+        {% endfor %}
+      </p>
+      <p>{{ form.submit() }}</p>
+    </form>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}
