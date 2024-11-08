@@ -71,7 +71,9 @@
     padding: 10px;
   "
 >
-  {% if post.title %}
+  {% if post.banner_image%}
+  <img src="{{post.banner_image}}" />
+  {% endif %} {% if post.title %}
   <h1>{{ post.title[0]|upper }}{{ post.title[1:] }}</h1>
   {% else %}
   <h1>No title</h1>

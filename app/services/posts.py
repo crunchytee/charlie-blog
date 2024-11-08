@@ -13,6 +13,7 @@ def add_post():
         post = Post(
             title = form.title.data,
             body_html = form.body_html.data,
+            banner_image = form.banner_image.data,
             user_id = current_user.id,
             likes = 0,
             dislikes = 0

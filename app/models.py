@@ -32,6 +32,7 @@ class Post(db.Model):
     likes = db.Column(db.Integer)
     dislikes = db.Column(db.Integer)
     comments = db.relationship("Comment", backref="post", lazy="dynamic")
+    banner_image = db.Column(db.String(300))
 
     def __repr__(self):
         return '<Post {}>'.format(self.body_html)
