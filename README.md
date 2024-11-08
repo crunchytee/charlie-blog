@@ -11,7 +11,7 @@
 3. Navigate to the place you would like to store the folder. Your "Documents" folder is a good place to store the project. You can use the "cd" command to get to your documents folder - google "how to change directory to Documents folder on XXX" where XXX is your operating system if you don't know how to do it. If you are using Windows, you might want to consider installing the [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install), which gives you a better file structure for basically everything!
 4. Now that you're in the folder you'd like to put the project in, clone this repository using the command in your terminal:
    ```
-   git clone https://github.com/crunchytee/microblog-2.git
+   git clone https://github.com/crunchytee/charlie-blog.git
    ```
 5. You should see a progress tree that indicates the folder has been created. Now the project is on your computer!
 
@@ -39,8 +39,8 @@ python3 -m venv .venv
 Now that the code is downloaded, and you have a python virtual environment, it's time to open everything up in an editor. This guide assumes you will use VSCode but you can use anything.
 
 1. [Download VS Code](https://code.visualstudio.com/) if you don't have it already
-2. Open VS Code, and select "Open" under the Start section (or, under "File", "Open Folder") and select the microblog-2 folder.
-3. This should open up the folder. Confirm on the left hand side that you have the Microblog-2 folder as the top level, and all it's subfolders underneath.
+2. Open VS Code, and select "Open" under the Start section (or, under "File", "Open Folder") and select the charlie-blog folder.
+3. This should open up the folder. Confirm on the left hand side that you have the charlie-blog folder as the top level, and all it's subfolders underneath.
 4. In VS Code, open the terminal by selecting "Terminal" up at the top, and then "New Terminal". You may already have a terminal open, and that is fine.
 5. Your terminal should be open to the project folder already open. On Windows, type "cd" to confirm this, or type "pwd" on Mac to confirm.
 6. Finally, activate the python virtual environment:

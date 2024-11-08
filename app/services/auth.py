@@ -1,7 +1,7 @@
 from urllib.parse import urlparse
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, current_user, logout_user
-from app import app, db
+from app import db
 from app.forms import LoginForm, RegistrationForm
 from app.models import User
 
@@ -25,7 +25,7 @@ def login_helper():
         next_page = request.args.get("next")
         if not next_page or urlparse(next_page).netloc != "":
             next_page = url_for("index")
-        return redirect(url_for('index'))
+        return redirect(next_page)
     
     # User requesting login form, show login page
     return render_template("login.html", title="Login", form=form)
@@ -33,7 +33,7 @@ def login_helper():
 def logout_helper():
     # Log out user and send them back to the homepage
     logout_user()
-    return render_template("index.html", title="Home | Charlie")
+    return redirect(url_for("index"))
 
 def registration_helper():
     # Check if user is logged in. If so, take them to the homepage. They shouldn't be registering for an account if they're loggedn in already
@@ -52,3 +52,12 @@ def registration_helper():
     
     # Get request, show registration form
     return render_template("register.html", title="Registration", form=form)
+
+# Safe user function. User has to be found and match current user
+def is_user_valid(user_id):
+    if current_user.is_anonymous:
+        return False
+    user = User.query.filter_by(id = user_id).first()
+    if user is None or user.username != current_user.username:
+        return False
+    return True

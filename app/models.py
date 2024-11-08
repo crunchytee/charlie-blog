@@ -25,11 +25,27 @@ def load_user(id):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(300), nullable=False)
     body_html = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     likes = db.Column(db.Integer)
     dislikes = db.Column(db.Integer)
+    comments = db.relationship("Comment", backref="post", lazy="dynamic")
+    banner_image = db.Column(db.String(300))
 
     def __repr__(self):
         return '<Post {}>'.format(self.body_html)
+    
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    comment = db.Column(db.String(300), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
+    likes = db.Column(db.Integer, default=0)
+    dislikes = db.Column(db.Integer, default=0)
+    author = db.relationship("User", backref="comments")
+
+    def __repr__(self):
+        return '<Comment {}>'.format(self.comment)

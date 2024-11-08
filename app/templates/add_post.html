@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block content %}
+<h1>Add Post</h1>
+<form action="" method="post">
+  {{ form.hidden_tag() }}
+  <p>
+    {{ form.title.label }}<br />
+    {{ form.title(size=50) }}<br />
+    {% for error in form.title.errors %}
+    <span style="color: red">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>
+    {{ form.body_html.label }}<br />
+    {{ form.body_html }}<br />
+    {% for error in form.body_html.errors %}
+    <span style="color: red">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>
+    {{ form.banner_image.label }}<br />
+    {{ form.banner_image }}<br />
+    {% for error in form.banner_image.errors %}
+    <span style="color: red">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>*Banner Images must be submitted as a URL link to an image</p>
+  <p>{{ form.submit() }}</p>
+</form>
+{% endblock %}
