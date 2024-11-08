@@ -1,7 +1,7 @@
 from urllib.parse import urlparse
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, current_user, logout_user
-from app import app, db
+from app import db
 from app.forms import LoginForm, RegistrationForm
 from app.models import User
 

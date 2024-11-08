@@ -32,5 +32,5 @@ class PostForm(FlaskForm):
     submit = SubmitField("Post")
 
 class CommentForm(FlaskForm):
-    comment = body_html = TextAreaField("Comment", validators=[DataRequired(), Length(2, 300, "Post must be within 2 and 300 characters")])
+    comment = TextAreaField("Comment", validators=[DataRequired(), Length(2, 300, "Post must be within 2 and 300 characters")])
     submit = SubmitField("Post Comment")

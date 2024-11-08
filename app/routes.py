@@ -1,11 +1,9 @@
-from urllib.parse import urlparse
-from flask import render_template, flash, redirect, url_for, request
-from flask_login import login_user, current_user, logout_user, login_required
-from app import app, db
-from app.forms import LoginForm
-from app.models import User, Post
+from flask import render_template
+from flask_login import login_required
+from app import app
+from app.models import Post
 from app.services.auth import login_helper, logout_helper, registration_helper
-from app.services.posts import add_post, update_post, delete_post, view_post
+from app.services.posts import add_post, update_post, delete_post, view_post, like_post_helper, dislike_post_helper, like_comment_helper, dislike_comment_helper
 
 # Main links that return a webpage
 # Home Page
@@ -31,10 +29,12 @@ def create_post():
 def post(post_id):
     return view_post(post_id)
 
+# Edit post
 @app.route('/post/<post_id>/edit', methods=['GET', 'POST'])
 def edit_post(post_id):
     return update_post(post_id)
 
+# Delete post
 @app.route('/post/<post_id>/delete', methods=['GET', 'POST'])
 def remove_post(post_id):
     return delete_post(post_id)
@@ -73,33 +73,23 @@ def page_not_found(e):
     return render_template('404.html'), 404
 
 # Functional routes
-@app.route('/post/<post_id>/like')
+@app.route('/post/<post_id>/like', methods=['POST'])
 @login_required
 def like_post(post_id):
-    #TODO update template
-    return render_template("base.html", title="Home | Posts")
+    return like_post_helper(post_id)
 
-@app.route('/post/<post_id>/dislike')
+@app.route('/post/<post_id>/dislike', methods=['POST'])
 @login_required
 def dislike_post(post_id):
-    #TODO update template
-    return render_template("base.html", title="Home | Posts")
+    return dislike_post_helper(post_id)
 
-@app.route('/comment/<comment_id>/like')
+@app.route('/comment/<comment_id>/like', methods=['POST'])
 @login_required
 def like_comment(comment_id):
-    #TODO update template
-    return render_template("base.html", title="Home | Posts")
+    return like_comment_helper(comment_id)
 
-@app.route('/comment/<comment_id>/dislike')
+@app.route('/comment/<comment_id>/dislike', methods=['POST'])
 @login_required
 def dislike_comment(comment_id):
-    #TODO update template
-    return render_template("base.html", title="Home | Posts")
-
-@app.route('/post/<post_id>/comment')
-@login_required
-def comment(post_id):
-    #TODO update template
-    return render_template("base.html", title="Home | Posts")
+    return dislike_comment_helper(comment_id)
 

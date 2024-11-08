@@ -1,4 +1,66 @@
 {% extends "base.html" %} {% block content %}
+<script>
+  function showCommentForm() {
+    document.getElementById("comment-form").style.display = "block";
+    document.getElementById("show-comment-form").style.display = "none";
+  }
+  function likePost(postId) {
+    fetch(`/post/${postId}/like`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        document.getElementById(`like-count-${postId}`).innerText = data.likes;
+      })
+      .catch((error) => console.error("error: ", error));
+  }
+  function dislikePost(postId) {
+    fetch(`/post/${postId}/dislike`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        document.getElementById(`dislike-count-${postId}`).innerText =
+          data.dislikes;
+      })
+      .catch((error) => console.error("error: ", error));
+  }
+  function likeComment(commentId) {
+    fetch(`/comment/${commentId}/like`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        document.getElementById(`comment-like-count-${commentId}`).innerText =
+          data.likes;
+      })
+      .catch((error) => console.error("error: ", error));
+  }
+  function dislikeComment(commentId) {
+    fetch(`/comment/${commentId}/dislike`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        document.getElementById(
+          `comment-dislike-count-${commentId}`
+        ).innerText = data.dislikes;
+      })
+      .catch((error) => console.error("error: ", error));
+  }
+</script>
 <div
   style="
     border-style: solid;
@@ -19,7 +81,10 @@
     post.timestamp.day }}/{{ post.timestamp.year }}
   </h3>
   <p>{{ post.body_html | safe }}</p>
-  <p>Likes: {{post.likes}} Dislikes: {{ post.dislikes }}</p>
+  <p>
+    Likes: <span id="like-count-{{post.id}}">{{post.likes}}</span> Dislikes:
+    <span id="dislike-count-{{post.id}}">{{ post.dislikes }}</span>
+  </p>
   {% if post.user_id == current_user.id %}
   <div
     style="
@@ -30,14 +95,20 @@
       padding: 10px;
     "
   >
-    <p>Administration</p>
+    <p>Post Administration</p>
     <a href="/post/{{post.id}}/edit">Edit</a>
     <a href="/post/{{post.id}}/delete">Delete</a>
   </div>
+  {% elif not current_user.is_anonymous%}
+  <button onclick="likePost('{{post.id}}')">Like</button>
+  <button onclick="dislikePost('{{post.id}}')">Dislike</button>
   {% else %}
-  <a href="/post/{{post.id}}/like">Like</a>
-  <a href="/post/{{post.id}}/dislike">Dislike</a>
-  {% endif %} {% if post.comments %} {% for comment in post.comments %}
+  <p>
+    <a href="{{url_for('login')}}">Log In</a> to react or comment on this post
+  </p>
+  {% endif %} {% if post.comments %}
+  <h2>Comments</h2>
+  {% for comment in post.comments %}
   <div>
     <h4>{{ comment.author.username }}</h4>
     <p>
@@ -45,19 +116,26 @@
       comment.timestamp.year }}
     </p>
     <p>{{ comment.comment }}</p>
-    {% if comment.user_id == current_user.id %}
-    <p>Likes: {{comment.likes}} Dislikes: {{ comment.dislikes }}</p>
-    {% else %}
-    <p>Likes: {{comment.likes}} Dislikes: {{ comment.dislikes }}</p>
-    <a href="/post/{{comment.id}}/like">Like</a>
-    <a href="/post/{{comment.id}}/dislike">Dislike</a>
+    <p>
+      Likes:
+      <span id="comment-like-count-{{comment.id}}">{{comment.likes}}</span>
+      Dislikes:
+      <span id="comment-dislike-count-{{comment.id}}"
+        >{{ comment.dislikes }}</span
+      >
+    </p>
+    {% if not current_user.is_anonymous%}
+    <button onclick="likeComment('{{comment.id}}')">Like</button>
+    <button onclick="dislikeComment('{{comment.id}}')">Dislike</button>
     {% endif %}
   </div>
   {% endfor %} {% else %}
   <div><p>No Comments. Add yours!</p></div>
   {% endif %}
-  <button id="show-comment-form">Add Comment</button>
-  <div style="display: block">
+  <button id="show-comment-form" onClick="showCommentForm()">
+    Add Comment
+  </button>
+  <div id="comment-form" style="display: none">
     {% if current_user.is_anonymous %}
     <p>
       You need to
@@ -65,7 +143,6 @@
       can add a comment.
     </p>
     {% else %}
-    <h1>test</h1>
     <form action="" method="post">
       {{ form.hidden_tag() }}
       <p>

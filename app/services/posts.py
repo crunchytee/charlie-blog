@@ -1,9 +1,8 @@
-from urllib.parse import urlparse
-from flask import render_template, flash, redirect, url_for, request
-from flask_login import login_user, current_user, logout_user
-from app import app, db
-from app.forms import LoginForm, RegistrationForm, PostForm, CommentForm
-from app.models import User, Post, Comment
+from flask import render_template, flash, redirect, url_for, jsonify
+from flask_login import current_user
+from app import db
+from app.forms import PostForm, CommentForm
+from app.models import Post, Comment
 from app.services.auth import is_user_valid
 
 def add_post():
@@ -66,19 +65,42 @@ def delete_post(post_id):
 def view_post(post_id):
     # Comment form
     form = CommentForm()
-    print("reached view post", flush=True)
     if form.validate_on_submit():
-        print("reached form validate", flush=True)
         print(post_id, flush=True)
         comment = Comment(post_id=int(post_id), comment=form.comment.data, user_id=current_user.id)
         db.session.add(comment)
         db.session.commit()
         flash("Comment added")
-        # return redirect("/post/" + post_id)
-        return redirect("/index")
+        return redirect("/post/" + post_id)
     # Get post - return 404 if no post
     post = Post.query.filter_by(id=post_id).first_or_404()
     truncated_title = post.title if len(post.title) < 50 else (post.title[:47] + "...")
     return render_template("post.html", title=truncated_title, post=post, form=form)
 
-# Delete posts
+def like_post_helper(post_id):
+    post = Post.query.filter_by(id=post_id).first()
+    post.likes += 1
+    db.session.commit()
+
+    return jsonify({"likes": post.likes})
+
+def dislike_post_helper(post_id):
+    post = Post.query.filter_by(id=post_id).first()
+    post.dislikes += 1
+    db.session.commit()
+
+    return jsonify({"dislikes": post.dislikes})
+
+def like_comment_helper(comment_id):
+    comment = Comment.query.filter_by(id=comment_id).first()
+    comment.likes += 1
+    db.session.commit()
+
+    return jsonify({"likes": comment.likes})
+
+def dislike_comment_helper(comment_id):
+    comment = Comment.query.filter_by(id=comment_id).first()
+    comment.dislikes += 1
+    db.session.commit()
+
+    return jsonify({"dislikes": comment.dislikes})
