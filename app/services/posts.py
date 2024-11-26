@@ -7,8 +7,8 @@ from app.services.auth import is_user_valid
 
 def add_post():
     
-    # Post request, handle post creation
     form = PostForm()
+    # Post request, handle post creation
     if form.validate_on_submit():
         post = Post(
             title = form.title.data,
@@ -23,7 +23,7 @@ def add_post():
         flash("Posted!")
         return redirect(url_for("index"))
     
-    # Get request, show add post form
+    # Get request, show add post form 
     return render_template("add_post.html", title="Add Post", form=form)
 
 def update_post(post_id):

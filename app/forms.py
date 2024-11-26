@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, Length
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, Length, Regexp
 from app.models import User
 
 class LoginForm(FlaskForm):
@@ -35,3 +35,10 @@ class PostForm(FlaskForm):
 class CommentForm(FlaskForm):
     comment = TextAreaField("Comment", validators=[DataRequired(), Length(2, 300, "Post must be within 2 and 300 characters")])
     submit = SubmitField("Post Comment")
+
+class ContactForm(FlaskForm):
+    name = StringField("Name", validators=[DataRequired()])
+    email = StringField("Email", validators=[Email(), DataRequired()])
+    phone_number = StringField("Phone Number", validators=[Regexp("^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$", message="Please enter a valid 10 digit phone number"), DataRequired()])
+    message = StringField("Message", validators=[DataRequired()])
+    submit = SubmitField("Submit")
