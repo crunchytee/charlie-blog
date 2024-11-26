@@ -40,6 +40,13 @@
   {% endif %}
 </div>
 {% endfor %}
+<div>
+  {% if prev_page %}
+  <a href="{{prev_page}}"><- Newer posts</a>
+  {% endif %} {% if next_page %}
+  <a href="{{next_page}}">Older Posts -></a>
+  {% endif %}
+</div>
 <script>
   // Get the title element, store it in the variable title
   var title = document.getElementById("title");
