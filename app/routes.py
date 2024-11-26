@@ -1,9 +1,9 @@
 from flask import render_template
 from flask_login import login_required
 from app import app
-from app.models import Post
 from app.services.auth import login_helper, logout_helper, registration_helper
 from app.services.posts import add_post, update_post, delete_post, view_post, like_post_helper, dislike_post_helper, like_comment_helper, dislike_comment_helper, view_posts
+from app.services.contact import contact_handler
 
 # Main links that return a webpage
 # Home Page
@@ -61,11 +61,9 @@ def credits():
     #TODO update template
     return render_template("base.html", title="Home | Posts")
 
-@app.route('/contact')
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
-    #TODO update template
-    return render_template("base.html", title="Home | Posts")
-
+    return contact_handler()
 
 @app.errorhandler(404)
 def page_not_found(e):
