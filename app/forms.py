@@ -39,6 +39,6 @@ class CommentForm(FlaskForm):
 class ContactForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
     email = StringField("Email", validators=[Email(), DataRequired()])
-    phone_number = StringField("Phone Number", validators=[Regexp("^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$", message="Please enter a valid 10 digit phone number"), DataRequired()])
+    phone_number = StringField("Phone Number", validators=[Regexp(r"^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$", message="Please enter a valid 10 digit phone number"), DataRequired()])
     message = StringField("Message", validators=[DataRequired()])
     submit = SubmitField("Submit")
