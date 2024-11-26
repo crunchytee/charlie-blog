@@ -1,13 +1,15 @@
 <header>
-  <a href="{{ url_for('index') }}">Home</a>
-  <a href="{{ url_for('posts') }}">Posts</a>
-  <a href="{{ url_for('about') }}">About</a>
-  <a href="{{ url_for('credits') }}">Credits</a>
-  <a href="{{ url_for('contact') }}">Contact</a>
-  {% if current_user.is_anonymous %}
-  <a href="{{ url_for('login') }}">Log In</a>
-  {% else %}
-  <a href="{{ url_for('create_post') }}">Create Post</a>
-  <a href="{{ url_for('logout') }}">Log Out</a>
-  {% endif %}
+  <md-list>
+    <md-list-item href="{{ url_for('index') }}">Home</md-list-item>
+    <md-list-item href="{{ url_for('posts') }}">Posts</md-list-item>
+    <md-list-item href="{{ url_for('about') }}">About</md-list-item>
+    <md-list-item href="{{ url_for('credits') }}">Credits</md-list-item>
+    <md-list-item href="{{ url_for('contact') }}">Contact</md-list-item>
+    {% if current_user.is_anonymous %}
+    <md-list-item href="{{ url_for('login') }}">Log In</md-list-item>
+    {% else %}
+    <md-list-item href="{{ url_for('create_post') }}">Create Post</md-list-item>
+    <md-list-item href="{{ url_for('logout') }}">Log Out</md-list-item>
+    {% endif %}
+  </md-list>
 </header>

@@ -29,27 +29,26 @@
 
       document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
     </script>
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&display=swap");
-
-      :root {
-        --md-ref-typeface-brand: "Archivo";
-        --md-ref-typeface-plain: "Archivo";
-      }
-    </style>
     <!-- End import material-web -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
     {% endblock %}
   </head>
   <body>
-    {% include "_navbar.html"%} {% with messages = get_flashed_messages()%} {%
-    if messages %}
-    <ul>
-      {% for message in messages %}
-      <li>{{ message }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %} {% endwith %}
-    <div class="content">{% block content %} {% endblock %}</div>
-    {% include "_footer.html" %}
+    <div class="top">Top bar w graphic</div>
+    <div class="body">
+      <div class="header">{% include "_navbar.html"%}</div>
+      {% with messages = get_flashed_messages()%} {% if messages %}
+      <md-list>
+        {% for message in messages %}
+        <md-list-item>{{ message }}</md-list-item>
+        {% endfor %}
+      </md-list>
+      {% endif %} {% endwith %}
+      <div class="content">{% block content %} {% endblock %}</div>
+    </div>
+    <div class="footer">{% include "_footer.html" %}</div>
   </body>
 </html>
