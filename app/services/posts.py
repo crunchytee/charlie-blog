@@ -1,6 +1,6 @@
-from flask import render_template, flash, redirect, url_for, jsonify
+from flask import render_template, flash, redirect, url_for, jsonify, request
 from flask_login import current_user
-from app import db
+from app import db, app
 from app.forms import PostForm, CommentForm
 from app.models import Post, Comment
 from app.services.auth import is_user_valid
@@ -62,6 +62,13 @@ def delete_post(post_id):
     db.session.commit()
     flash("Post Deleted")
     return redirect(url_for("index"))
+
+def view_posts():
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=app.config['POSTS_PER_PAGE'], error_out=False)
+    next_url = url_for('index', page=posts.next_num) if posts.has_next else None
+    prev_url = url_for('index', page=posts.prev_num) if posts.has_prev else None
+    return render_template("index.html", title="Home | Posts", posts=posts.items, next_page=next_url, prev_page=prev_url)
 
 def view_post(post_id):
     # Comment form

@@ -3,15 +3,14 @@ from flask_login import login_required
 from app import app
 from app.models import Post
 from app.services.auth import login_helper, logout_helper, registration_helper
-from app.services.posts import add_post, update_post, delete_post, view_post, like_post_helper, dislike_post_helper, like_comment_helper, dislike_comment_helper
+from app.services.posts import add_post, update_post, delete_post, view_post, like_post_helper, dislike_post_helper, like_comment_helper, dislike_comment_helper, view_posts
 
 # Main links that return a webpage
 # Home Page
 @app.route('/')
 @app.route('/index')
 def index():
-    posts = Post.query.all()
-    return render_template("index.html", title="Home | Posts", posts=posts)
+    return view_posts()
 
 # Posts page - same as home page but added for continuity
 @app.route('/posts')
