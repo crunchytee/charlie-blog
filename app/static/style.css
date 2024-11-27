@@ -1,13 +1,96 @@
 @import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&display=swap");
 
 :root {
-  --md-sys-color-background: #fdf6e4;
-  --md-sys-color-surface: #fcf2d9;
+  --md-sys-color-background: #e3dedb;
+  --md-sys-color-surface: #b6b5b3;
+  --md-sys-color-primary: #fd3f01;
+  --md-menu-container-color: #e3dedb;
+  --md-sys-color-secondary-container: #b6b5b3;
+  --md-filled-button-container-color: var(--md-sys-color-primary);
   --md-ref-typeface-brand: "Archivo";
   --md-ref-typeface-plain: "Archivo";
+  --md-sys-shape-corner-small: 4px;
+  --md-sys-shape-corner-medium: 6px;
+  --md-sys-shape-corner-large: 8px;
+  --md-list-item-top-space: 5px;
+  --md-list-item-bottom-space: 5px;
+  --md-list-item-one-line-container-height: 45px;
+  --padding-small: 10px;
+  --margin-small: 10px;
   background-color: var(--md-sys-color-background);
+  border-radius: var(--md-sys-shape-corner-medium);
 }
 
 .body {
   display: flex;
+}
+
+.logo-image {
+  max-width: 200px;
+  max-height: 50px;
+  padding: var(--padding-small);
+}
+.github-image {
+  max-width: 200px;
+  max-height: 30px;
+  padding: var(--padding-small);
+}
+
+.top {
+  background-color: var(--md-sys-color-surface);
+  border-radius: var(--md-sys-shape-corner-medium);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-list-desktop {
+  margin-top: var(--margin-small);
+  border-radius: var(--md-sys-shape-corner-medium);
+  margin-right: var(--margin-small);
+}
+.header-list-mobile {
+  padding: var(--padding-small);
+}
+
+@media only screen and (max-width: 768px) {
+  .header-list-desktop {
+    display: none;
+  }
+  .header {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .header-list-mobile {
+    display: none;
+  }
+  .footer-menu {
+    flex-direction: row;
+  }
+}
+
+md-filled-button {
+  border-radius: var(--md-sys-shape-corner-large);
+}
+
+.highlighted-button {
+  background-color: var(--md-filled-button-container-color);
+  border-radius: var(--md-sys-shape-corner-large);
+  margin-left: 10px;
+  margin-right: 10px;
+}
+md-list-item {
+  border-radius: var(--md-sys-shape-corner-large);
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.footer-menu {
+  margin-top: var(--margin-small);
+  border-radius: var(--md-sys-shape-corner-large);
+}
+
+.footer-link {
 }

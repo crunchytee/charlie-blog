@@ -1,14 +1,18 @@
 <header>
-  <md-list>
+  <md-list class="header-list-desktop">
     <md-list-item href="{{ url_for('index') }}">Home</md-list-item>
     <md-list-item href="{{ url_for('posts') }}">Posts</md-list-item>
     <md-list-item href="{{ url_for('about') }}">About</md-list-item>
     <md-list-item href="{{ url_for('credits') }}">Credits</md-list-item>
     <md-list-item href="{{ url_for('contact') }}">Contact</md-list-item>
     {% if current_user.is_anonymous %}
-    <md-list-item href="{{ url_for('login') }}">Log In</md-list-item>
+    <md-list-item class="highlighted-button" href="{{ url_for('login') }}"
+      >Log In</md-list-item
+    >
     {% else %}
-    <md-list-item href="{{ url_for('create_post') }}">Create Post</md-list-item>
+    <md-list-item class="highlighted-button" href="{{ url_for('create_post') }}"
+      >Create Post</md-list-item
+    >
     <md-list-item href="{{ url_for('logout') }}">Log Out</md-list-item>
     {% endif %}
   </md-list>

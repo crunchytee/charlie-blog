@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     {% block head %} {% if title %}
@@ -37,11 +37,11 @@
     {% endblock %}
   </head>
   <body>
-    <div class="top">Top bar w graphic</div>
+    {% include "_header.html"%}
     <div class="body">
       <div class="header">{% include "_navbar.html"%}</div>
       {% with messages = get_flashed_messages()%} {% if messages %}
-      <md-list>
+      <md-list class="header-list">
         {% for message in messages %}
         <md-list-item>{{ message }}</md-list-item>
         {% endfor %}
