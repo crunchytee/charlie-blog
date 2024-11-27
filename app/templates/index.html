@@ -1,16 +1,9 @@
 {% extends "base.html" %} {% block content %}
-<h1 id="title">Hi, {{ current_user.username }}!</h1>
+<h1 class="container blue">
+  🤩 Hi, {{ current_user.username }}! Thanks for stopping by
+</h1>
 {% for post in posts %}
-<div
-  style="
-    border-style: solid;
-    border-radius: 5px;
-    border-width: 1px;
-    background-color: #fdf6e4;
-    margin: 5px;
-    padding: 10px;
-  "
->
+<div class="">
   {% if post.title %}
   <h2>{{ post.title[0]|upper }}{{ post.title[1:] }}</h2>
   {% else %}
@@ -24,15 +17,7 @@
   <p>Likes: {{post.likes}} Dislikes: {{ post.dislikes }}</p>
   <a href="/post/{{post.id}}">View Full Post</a>
   {% if post.user_id == current_user.id %}
-  <div
-    style="
-      border-style: solid;
-      border-radius: 5px;
-      border-width: 1px;
-      margin: 5px;
-      padding: 10px;
-    "
-  >
+  <div>
     <p>Administration</p>
     <a href="/post/{{post.id}}/edit">Edit</a>
     <a href="/post/{{post.id}}/delete">Delete</a>
@@ -47,18 +32,4 @@
   <a href="{{next_page}}">Older Posts -></a>
   {% endif %}
 </div>
-<script>
-  // Get the title element, store it in the variable title
-  var title = document.getElementById("title");
-  // Add a listener for when you hover your mouse over the title box, and a function to be called when you do
-  title.addEventListener("mouseover", function () {
-    // When you do hover over, change the color of the title to green
-    title.style.color = "green";
-  });
-
-  // Listener for when you stop hovering over the title -> Change back to black
-  title.addEventListener("mouseout", function () {
-    title.style.color = "black";
-  });
-</script>
 {% endblock %}
