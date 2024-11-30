@@ -13,7 +13,7 @@
     })
       .then((response) => response.json())
       .then((data) => {
-        document.getElementById(`like-count-${postId}`).innerText = data.likes;
+        document.getElementById(`like-count-${postId}`).innerText = `👍 ${data.likes}`;
       })
       .catch((error) => console.error("error: ", error));
   }
@@ -27,7 +27,7 @@
       .then((response) => response.json())
       .then((data) => {
         document.getElementById(`dislike-count-${postId}`).innerText =
-          data.dislikes;
+          `👎 ${data.dislikes}`;
       })
       .catch((error) => console.error("error: ", error));
   }
