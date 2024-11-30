@@ -37,6 +37,5 @@ nosetests.xml
 
 .venv
 app.db
-config.py
 .vscode/settings.json
 .DS_store
