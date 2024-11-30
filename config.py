@@ -10,7 +10,7 @@ class Config(object):
     POSTS_PER_PAGE = 3
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 587
-    MAIL_USERNAME = 'charlieblog916@gmail.com'  # Use your actual Gmail address
-    MAIL_PASSWORD = 'fhrr hoag myje tnci'     # Use your generated App Password
+    MAIL_USERNAME = 'test@gmail.com'  # Use your actual Gmail address
+    MAIL_PASSWORD = 'test'     # Use your generated App Password
     MAIL_USE_TLS = True
     MAIL_USE_SSL = False
