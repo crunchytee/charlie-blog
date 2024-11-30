@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <link
+      rel="shortcut icon"
+      href="https://cdn.shopify.com/s/files/1/0571/5250/3870/files/wwwcharlie.png?v=1732659215"
+    />
     {% block head %} {% if title %}
     <title>{{ title }} | Charlie</title>
     {% else %}
@@ -45,8 +49,9 @@
     <div class="body">
       <div class="header">{% include "_navbar.html"%}</div>
       <div class="main">
-        {% include "_popups.html"%}
-        <div class="main-content">{% block content %} {% endblock %}</div>
+        <div class="main-content">
+          {% include "_popups.html"%} {% block content %} {% endblock %}
+        </div>
       </div>
     </div>
     <div>{% include "_footer.html" %}</div>

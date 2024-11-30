@@ -1,22 +1,39 @@
 {% extends "base.html" %} {% block content %}
-<h1>Update Post</h1>
-<form action="" method="post">
-  {{ form.hidden_tag() }}
-  <p>
-    {{ form.title.label }}<br />
-    {{ form.title(size=50, value=post.title) }}<br />
-    {% for error in form.title.errors %}
-    <span style="color: red">[{{ error }}]</span>
-    {% endfor %}
-  </p>
-  <p>
-    {{ form.body_html.label }}<br />
-    <textarea name="{{ form.body_html.name }}">{{post.body_html}}</textarea>
-    {% for error in form.body_html.errors %}
-    <span style="color: red">[{{ error }}]</span>
-    {% endfor %}
-  </p>
-  <p>{{ form.submit() }}</p>
-  <a href="{{url_for('index')}}">Cancel changes and return to home</a>
-</form>
+<div class="container">
+  <form action="" method="post" class="form">
+    <h1 class="container green">Update Post</h1>
+    {{ form.hidden_tag() }}
+    <p>
+      {{ form.title.label }}<br />
+      {{ form.title(class="form-input", value=post.title) }}<br />
+      {% for error in form.title.errors %}
+      <span class="form-error">{{ error }}</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.body_html.label }}<br />
+      <textarea class="form-input" name="{{ form.body_html.name }}">
+{{post.body_html}}</textarea
+      >
+      {% for error in form.body_html.errors %}
+      <span class="form-error">{{ error }}</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.banner_image.label }}<br />
+      {{ form.banner_image(class="form-input", value=post.banner_image) }}<br />
+      {% for error in form.banner_image.errors %}
+      <span class="form-error">{{ error }}</span>
+      {% endfor %}
+    </p>
+    <p>
+      *Banner Images must be submitted as a URL link to an image - this site is
+      hosted on a potato
+    </p>
+    <p>{{ form.submit(class="container orange button") }}</p>
+    <a class="styled-link" href="{{url_for('index')}}"
+      >Cancel changes and return to home</a
+    >
+  </form>
+</div>
 {% endblock %}

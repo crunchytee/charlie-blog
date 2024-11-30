@@ -1,35 +1,15 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% block content %} {% if current_user.is_anonymous%}
+<h1 class="container blue">Welcome to Charlie Blog 🫶</h1>
+{% else %}
 <h1 class="container blue">
   🤩 Hi, {{ current_user.username }}! Thanks for stopping by
 </h1>
-{% for post in posts %}
-<div class="">
-  {% if post.title %}
-  <h2>{{ post.title[0]|upper }}{{ post.title[1:] }}</h2>
-  {% else %}
-  <h2>No title</h2>
-  {% endif %}
-  <h3>
-    By: {{ post.author.username }} on {{ post.timestamp.month }}/{{
-    post.timestamp.day }}/{{ post.timestamp.year }}
-  </h3>
-  <p>{{ post.body_html | safe }}</p>
-  <p>Likes: {{post.likes}} Dislikes: {{ post.dislikes }}</p>
-  <a href="/post/{{post.id}}">View Full Post</a>
-  {% if post.user_id == current_user.id %}
-  <div>
-    <p>Administration</p>
-    <a href="/post/{{post.id}}/edit">Edit</a>
-    <a href="/post/{{post.id}}/delete">Delete</a>
-  </div>
-  {% endif %}
-</div>
-{% endfor %}
-<div>
+{% endif %} {% for post in posts %} {% include "_post-card.html"%} {% endfor %}
+<div class="container paginate-buttons">
   {% if prev_page %}
-  <a href="{{prev_page}}"><- Newer posts</a>
+  <a class="container orange button" href="{{prev_page}}">👶 Newer posts</a>
   {% endif %} {% if next_page %}
-  <a href="{{next_page}}">Older Posts -></a>
+  <a class="container orange button" href="{{next_page}}">Older Posts 👴</a>
   {% endif %}
 </div>
 {% endblock %}

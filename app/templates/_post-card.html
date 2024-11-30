@@ -1,0 +1,86 @@
+<div class="container post">
+  {% if post.title %}
+  <h2 class="green container">
+    {{ post.title[0]|upper }}{{ post.title[1:]|truncate(50) }}
+  </h2>
+  {% else %}
+  <h2 class="green container">No title 😔</h2>
+  {% endif %}
+  <h3>
+    By: {{ post.author.username }} on {{ post.timestamp.month }}/{{
+    post.timestamp.day }}/{{ post.timestamp.year }}
+  </h3>
+  <p>{{ post.body_html|truncate(300) }}</p>
+  <div class="post-buttons">
+    {% if not current_user.is_anonymous%}
+    <button
+      class="container blue button"
+      id="like-count-{{post.id}}"
+      onclick="likePost('{{post.id}}')"
+    >
+      👍 {{post.likes}}
+    </button>
+    <button
+      class="container blue button"
+      id="dislike-count-{{post.id}}"
+      onclick="dislikePost('{{post.id}}')"
+    >
+      👎 {{ post.dislikes }}
+    </button>
+    {%else%}
+    <span class="container blue" id="like-count-{{post.id}}"
+      >👍 Likes: {{post.likes}}
+    </span>
+    <span class="container blue" id="dislike-count-{{post.id}}"
+      >👎 Dislikes: {{ post.dislikes }}</span
+    >
+
+    {%endif%}
+    <a class="container orange button" href="/post/{{post.id}}"
+      >View Full Post</a
+    >
+    {% if post.user_id == current_user.id %}
+    <a class="container red button" href="/post/{{post.id}}/edit">Edit Post</a>
+    <a class="container red button" href="/post/{{post.id}}/delete"
+      >Delete Post</a
+    >
+    {% endif %}
+  </div>
+  {% if current_user.is_anonymous%}
+  <a href="{{url_for('login')}}" class="styled-link"
+    >Log in to react to posts</a
+  >
+  {% endif %}
+</div>
+<script>
+  function likePost(postId) {
+    fetch(`/post/${postId}/like`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        document.getElementById(
+          `like-count-${postId}`
+        ).innerText = `👍 ${data.likes}`;
+      })
+      .catch((error) => console.error("error: ", error));
+  }
+  function dislikePost(postId) {
+    fetch(`/post/${postId}/dislike`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        document.getElementById(
+          `dislike-count-${postId}`
+        ).innerText = `👎 ${data.dislikes}`;
+      })
+      .catch((error) => console.error("error: ", error));
+  }
+</script>

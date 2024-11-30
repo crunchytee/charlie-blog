@@ -40,8 +40,9 @@
     })
       .then((response) => response.json())
       .then((data) => {
-        document.getElementById(`comment-like-count-${commentId}`).innerText =
-          data.likes;
+        document.getElementById(
+          `comment-like-count-${commentId}`
+        ).innerText = `👍 ${data.likes}`;
       })
       .catch((error) => console.error("error: ", error));
   }
@@ -56,107 +57,121 @@
       .then((data) => {
         document.getElementById(
           `comment-dislike-count-${commentId}`
-        ).innerText = data.dislikes;
+        ).innerText = `👎 ${data.dislikes}`;
       })
       .catch((error) => console.error("error: ", error));
   }
 </script>
-<div
-  style="
-    border-style: solid;
-    border-radius: 5px;
-    border-width: 1px;
-    background-color: #ebebeb;
-    margin: 5px;
-    padding: 10px;
-  "
->
+<div class="container post">
   {% if post.banner_image%}
-  <img src="{{post.banner_image}}" />
+  <img class="banner-image" src="{{post.banner_image}}" />
   {% endif %} {% if post.title %}
-  <h1>{{ post.title[0]|upper }}{{ post.title[1:] }}</h1>
+  <h1 class="green container">{{ post.title[0]|upper }}{{ post.title[1:] }}</h1>
   {% else %}
-  <h1>No title</h1>
+  <h1 class="green container">No title 😔</h1>
   {% endif %}
   <h3>
     By: {{ post.author.username }} on {{ post.timestamp.month }}/{{
     post.timestamp.day }}/{{ post.timestamp.year }}
   </h3>
   <p>{{ post.body_html | safe }}</p>
-  <p>
-    Likes: <span id="like-count-{{post.id}}">{{post.likes}}</span> Dislikes:
-    <span id="dislike-count-{{post.id}}">{{ post.dislikes }}</span>
-  </p>
-  {% if post.user_id == current_user.id %}
-  <div
-    style="
-      border-style: solid;
-      border-radius: 5px;
-      border-width: 1px;
-      margin: 5px;
-      padding: 10px;
-    "
-  >
-    <p>Post Administration</p>
-    <a href="/post/{{post.id}}/edit">Edit</a>
-    <a href="/post/{{post.id}}/delete">Delete</a>
-  </div>
-  {% elif not current_user.is_anonymous%}
-  <button onclick="likePost('{{post.id}}')">Like</button>
-  <button onclick="dislikePost('{{post.id}}')">Dislike</button>
-  {% else %}
-  <p>
-    <a href="{{url_for('login')}}">Log In</a> to react or comment on this post
-  </p>
-  {% endif %} {% if post.comments %}
-  <h2>Comments</h2>
-  {% for comment in post.comments %}
-  <div>
-    <h4>{{ comment.author.username }}</h4>
-    <p>
-      On {{ comment.timestamp.month }}/{{ comment.timestamp.day }}/{{
-      comment.timestamp.year }}
-    </p>
-    <p>{{ comment.comment }}</p>
-    <p>
-      Likes:
-      <span id="comment-like-count-{{comment.id}}">{{comment.likes}}</span>
-      Dislikes:
-      <span id="comment-dislike-count-{{comment.id}}"
-        >{{ comment.dislikes }}</span
-      >
-    </p>
+  <div class="post-buttons">
     {% if not current_user.is_anonymous%}
-    <button onclick="likeComment('{{comment.id}}')">Like</button>
-    <button onclick="dislikeComment('{{comment.id}}')">Dislike</button>
+    <button
+      class="container blue button"
+      id="like-count-{{post.id}}"
+      onclick="likePost('{{post.id}}')"
+    >
+      👍 {{post.likes}}
+    </button>
+    <button
+      class="container blue button"
+      id="dislike-count-{{post.id}}"
+      onclick="dislikePost('{{post.id}}')"
+    >
+      👎 {{ post.dislikes }}
+    </button>
+    {%else%}
+    <span class="container blue" id="like-count-{{post.id}}"
+      >👍 Likes: {{post.likes}}
+    </span>
+    <span class="container blue" id="dislike-count-{{post.id}}"
+      >👎 Dislikes: {{ post.dislikes }}</span
+    >
+
+    {%endif%} {% if post.user_id == current_user.id %}
+    <a class="container red button" href="/post/{{post.id}}/edit">Edit Post</a>
+    <a class="container red button" href="/post/{{post.id}}/delete"
+      >Delete Post</a
+    >
     {% endif %}
   </div>
-  {% endfor %} {% else %}
-  <div><p>No Comments. Add yours!</p></div>
-  {% endif %}
-  <button id="show-comment-form" onClick="showCommentForm()">
-    Add Comment
-  </button>
-  <div id="comment-form" style="display: none">
-    {% if current_user.is_anonymous %}
-    <p>
-      You need to
-      <a href="{{url_for('login')}}?next=/post/{{post.id}}">Login</a> before you
-      can add a comment.
-    </p>
-    {% else %}
-    <form action="" method="post">
-      {{ form.hidden_tag() }}
-      <p>
-        {{ form.comment.label }}<br />
-        {{ form.comment(size=32) }}<br />
-        {% for error in form.comment.errors %}
-        <span style="color: red">{{ error }}</span>
-        {% endfor %}
-      </p>
-      <p>{{ form.submit() }}</p>
-    </form>
+  {% if current_user.is_anonymous%}
+  <a href="{{url_for('login')}}" class="styled-link"
+    >Log in to react/comment on posts</a
+  >
+  {% endif %} 
+  {% if post.comments %}
+  <h2 class="green container">Comments</h2>
+  {% for comment in post.comments %}
+  <div class="comment-container">
+    <h4>
+      {{ comment.author.username }} on {{ comment.timestamp.month }}/{{
+      comment.timestamp.day }}/{{ comment.timestamp.year }}
+    </h4>
+    <p>{{ comment.comment }}</p>
+    <div class="post-buttons">
+      {% if not current_user.is_anonymous%}
+      <button
+        class="container blue button"
+        id="comment-like-count-{{comment.id}}"
+        onclick="likeComment('{{comment.id}}')"
+      >
+        👍 {{comment.likes}}
+      </button>
+      <button
+        class="container blue button"
+        id="comment-dislike-count-{{comment.id}}"
+        onclick="dislikeComment('{{comment.id}}')"
+      >
+        👎 {{ comment.dislikes }}
+      </button>
+      {%else%}
+      <span class="container blue" id="comment-like-count-{{comment.id}}"
+        >👍 Likes: {{comment.likes}}
+      </span>
+      <span class="container blue" id="comment-dislike-count-{{comment.id}}"
+        >👎 Dislikes: {{ comment.dislikes }}</span
+      >
+      {% endif %}
+    </div>
+  </div>
+    {% endfor %} 
     {% endif %}
+    <button class="container orange button" id="show-comment-form" onClick="showCommentForm()">
+      Add Comment
+    </button>
+    <div id="comment-form" style="display: none">
+      {% if current_user.is_anonymous %}
+      <p>
+        You need to
+        <a class="styled-link" href="{{url_for('login')}}?next=/post/{{post.id}}">Login</a> before
+        you can add a comment.
+      </p>
+      {% else %}
+      <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+          {{ form.comment.label }}<br />
+          {{ form.comment(size=32, class="form-input") }}<br />
+          {% for error in form.comment.errors %}
+          <span class="form-error">{{ error }}</span>
+          {% endfor %}
+        </p>
+        <p>{{ form.submit(class="container orange button") }}</p>
+      </form>
+      {% endif %}
+    </div>
   </div>
 </div>
 {% endblock %}

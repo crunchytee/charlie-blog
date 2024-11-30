@@ -39,6 +39,7 @@ def update_post(post_id):
     if form.validate_on_submit():
         post.title = form.title.data
         post.body_html = form.body_html.data
+        post.banner_image = form.banner_image.data
         db.session.commit()
         flash("Post Updated!")
         return redirect(url_for("index"))
