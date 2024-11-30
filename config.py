@@ -11,6 +11,6 @@ class Config(object):
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 587
     MAIL_USERNAME = 'charlieblog916@gmail.com'  # Use your actual Gmail address
-    MAIL_PASSWORD = 'fhrr hoag myje tnci'     # Use your generated App Password
+    MAIL_PASSWORD = 'ozeg cbqa mpji brbx'     # Use your generated App Password
     MAIL_USE_TLS = True
     MAIL_USE_SSL = False
