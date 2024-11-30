@@ -1,6 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <link
+      rel="shortcut icon"
+      href="https://cdn.shopify.com/s/files/1/0571/5250/3870/files/wwwcharlie.png?v=1732659215"
+    />
     {% block head %} {% if title %}
     <title>{{ title }} | Charlie</title>
     {% else %}
@@ -14,6 +18,10 @@
     <!-- Import Material-web -->
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
     <script type="importmap">
@@ -37,18 +45,15 @@
     {% endblock %}
   </head>
   <body>
-    <div class="top">Top bar w graphic</div>
+    {% include "_header.html"%}
     <div class="body">
       <div class="header">{% include "_navbar.html"%}</div>
-      {% with messages = get_flashed_messages()%} {% if messages %}
-      <md-list>
-        {% for message in messages %}
-        <md-list-item>{{ message }}</md-list-item>
-        {% endfor %}
-      </md-list>
-      {% endif %} {% endwith %}
-      <div class="content">{% block content %} {% endblock %}</div>
+      <div class="main">
+        <div class="main-content">
+          {% include "_popups.html"%} {% block content %} {% endblock %}
+        </div>
+      </div>
     </div>
-    <div class="footer">{% include "_footer.html" %}</div>
+    <div>{% include "_footer.html" %}</div>
   </body>
 </html>

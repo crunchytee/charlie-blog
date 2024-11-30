@@ -53,13 +53,11 @@ def register():
 
 @app.route('/about')
 def about():
-    #TODO update template
-    return render_template("base.html", title="Home | Posts")
+    return render_template("about.html", title="About")
 
 @app.route('/credits')
 def credits():
-    #TODO update template
-    return render_template("base.html", title="Home | Posts")
+    return render_template("credits.html", title="Credits")
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():

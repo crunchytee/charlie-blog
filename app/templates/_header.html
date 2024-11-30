@@ -1,0 +1,56 @@
+<div class="top">
+  <span class="header-list-mobile" style="position: relative">
+    <md-filled-button id="usage-submenu-anchor"> Menu </md-filled-button>
+    <md-menu has-overflow id="usage-submenu" anchor="usage-submenu-anchor">
+      <md-menu-item href="{{ url_for('index') }}">
+        <span slot="headline">Home</span>
+      </md-menu-item>
+      <md-menu-item href="{{ url_for('posts') }}">
+        <span slot="headline">Posts</span>
+      </md-menu-item>
+      <md-menu-item href="{{ url_for('about') }}">
+        <span slot="headline">About</span>
+      </md-menu-item>
+      <md-menu-item href="{{ url_for('credits') }}">
+        <span slot="headline">Credits</span>
+      </md-menu-item>
+      <md-menu-item href="{{ url_for('contact') }}">
+        <span slot="headline">Contact</span>
+      </md-menu-item>
+      {% if current_user.is_anonymous %}
+      <md-menu-item href="{{ url_for('login') }}">
+        <span slot="headline">Log in</span>
+      </md-menu-item>
+      {% else %}
+      <md-menu-item href="{{ url_for('create_post') }}">
+        <span slot="headline">Create Post</span>
+      </md-menu-item>
+      <md-menu-item href="{{ url_for('logout') }}">
+        <span slot="headline">Log Out</span>
+      </md-menu-item>
+      {% endif %}
+    </md-menu>
+  </span>
+  <a href="{{url_for('index')}}">
+    <img
+      class="logo-image"
+      src="https://cdn.shopify.com/s/files/1/0571/5250/3870/files/CHARLIE_V2_2000_x_600_px_t.png?v=1732665790"
+      alt="Charlie Blog Logo Image"
+    />
+  </a>
+  <a href="https://github.com/crunchytee/charlie-blog/tree/main">
+    <img
+      class="github-image"
+      src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
+      alt="Github Image"
+    />
+  </a>
+</div>
+<script type="module">
+  const anchorEl = document.body.querySelector("#usage-submenu-anchor");
+  const menuEl = document.body.querySelector("#usage-submenu");
+
+  anchorEl.addEventListener("click", () => {
+    menuEl.open = !menuEl.open;
+  });
+</script>

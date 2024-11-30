@@ -1,0 +1,25 @@
+{% with messages = get_flashed_messages()%} {% if messages %}
+<div class="messages" id="messages">
+  <md-list class="header-list">
+    {% for message in messages %}
+    <md-list-item>{{ message }}</md-list-item>
+    {% endfor %}
+    <md-filled-icon-button
+      class="message-close-button"
+      id="close-message-button"
+    >
+      <span class="material-icons">close</span>
+    </md-filled-icon-button>
+  </md-list>
+</div>
+{% endif %} {% endwith %}
+
+<script>
+  const closePopupButton = document.getElementById("close-message-button");
+  const messagesDialogue = document.getElementById("messages");
+  if (closePopupButton) {
+    closePopupButton.addEventListener("click", () => {
+      messagesDialogue.style.display = "none";
+    });
+  }
+</script>
