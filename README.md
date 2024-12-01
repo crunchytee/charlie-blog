@@ -78,9 +78,18 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 class Config(object):
     SECRET_KEY = os.environ.get("SECRET_KEY") or "you-will-never-guess"
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL") or \
-        "sqlite:///" + os.path.join(basedir, "app.db")
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', '').replace(
+        'postgres://', 'postgresql://') or \
+        'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS= False
+    LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
+    POSTS_PER_PAGE = 3
+    MAIL_SERVER = 'smtp.gmail.com'
+    MAIL_PORT = 587
+    MAIL_USERNAME = 'test@gmail.com'  # Use your actual Gmail address
+    MAIL_PASSWORD = '12334'     # Use your generated App Password
+    MAIL_USE_TLS = True
+    MAIL_USE_SSL = False
 ```
 
 ### Configure database
@@ -123,3 +132,31 @@ git pull
 
 "git pull" will pull the codebase down to your local machine. When you switch branches, it may not be needed to do this, but it won't hurt to do.
 **main is the primary branch**
+
+## Deployment
+This project is recommended to be deployed using [Heroku](heroku.com). You will need to download the Heroku CLI, create and account, and then create an app and deploy it using the following commands:
+Start by logging in to Heroku
+```
+heroku login
+```
+Next, ensure you have a git repository for the project you want to deploy. Heroku relies on Git for deployment
+```
+git init
+```
+Create a Heroku App for deployment. The name of the app needs to be universally unique
+```
+heroku apps:create app-name
+```
+This project by default relies on SQLite for database, but Heroku uses an Ephemeral file system (erases frequently), so you need to use a persistent database, like the Heroku Postgres database
+```
+heroku addons:add heroku-postgresql:essential-0
+```
+You also need to create a Procfile (the command heroku uses to run the app) and update the requirements for deployment - but this repository includes those already. Finally, set your app environment variable: 
+```
+heroku config:set FLASK_APP=charlie-blog.py
+```
+And deploy by pushing the app to heroku! 
+```
+git push heroku main
+```
+
