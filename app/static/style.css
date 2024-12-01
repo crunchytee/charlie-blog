@@ -11,6 +11,7 @@
 
 :root {
   font-family: "Archivo";
+  line-height: 1.5;
   --md-sys-color-background: #e3dedb;
   --md-sys-color-surface: #b6b5b3;
   --md-sys-color-primary: #fd3f01;
