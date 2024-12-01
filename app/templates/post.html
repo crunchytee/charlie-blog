@@ -13,7 +13,9 @@
     })
       .then((response) => response.json())
       .then((data) => {
-        document.getElementById(`like-count-${postId}`).innerText = `👍 ${data.likes}`;
+        document.getElementById(
+          `like-count-${postId}`
+        ).innerText = `👍 ${data.likes}`;
       })
       .catch((error) => console.error("error: ", error));
   }
@@ -26,8 +28,9 @@
     })
       .then((response) => response.json())
       .then((data) => {
-        document.getElementById(`dislike-count-${postId}`).innerText =
-          `👎 ${data.dislikes}`;
+        document.getElementById(
+          `dislike-count-${postId}`
+        ).innerText = `👎 ${data.dislikes}`;
       })
       .catch((error) => console.error("error: ", error));
   }
@@ -110,8 +113,7 @@
   <a href="{{url_for('login')}}" class="styled-link"
     >Log in to react/comment on posts</a
   >
-  {% endif %} 
-  {% if post.comments %}
+  {% endif %} {% if post.comments %}
   <h2 class="green container">Comments</h2>
   {% for comment in post.comments %}
   <div class="comment-container">
@@ -146,32 +148,37 @@
       {% endif %}
     </div>
   </div>
-    {% endfor %} 
-    {% endif %}
-    <button class="container orange button" id="show-comment-form" onClick="showCommentForm()">
-      Add Comment
-    </button>
-    <div id="comment-form" style="display: none">
-      {% if current_user.is_anonymous %}
+  {% endfor %} {% endif %}
+  <button
+    class="container orange button"
+    id="show-comment-form"
+    onClick="showCommentForm()"
+  >
+    Add Comment
+  </button>
+  <div id="comment-form" style="display: none">
+    {% if current_user.is_anonymous %}
+    <p>
+      You need to
+      <a class="styled-link" href="{{url_for('login')}}?next=/post/{{post.id}}"
+        >Login</a
+      >
+      before you can add a comment.
+    </p>
+    {% else %}
+    <form action="" method="post">
+      {{ form.hidden_tag() }}
       <p>
-        You need to
-        <a class="styled-link" href="{{url_for('login')}}?next=/post/{{post.id}}">Login</a> before
-        you can add a comment.
+        {{ form.comment.label }}<br />
+        {{ form.comment(size=32, class="form-input") }}<br />
+        {% for error in form.comment.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
       </p>
-      {% else %}
-      <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-          {{ form.comment.label }}<br />
-          {{ form.comment(size=32, class="form-input") }}<br />
-          {% for error in form.comment.errors %}
-          <span class="form-error">{{ error }}</span>
-          {% endfor %}
-        </p>
-        <p>{{ form.submit(class="container orange button") }}</p>
-      </form>
-      {% endif %}
-    </div>
+      <p>{{ form.submit(class="container orange button") }}</p>
+    </form>
+    {% endif %}
   </div>
 </div>
+
 {% endblock %}
