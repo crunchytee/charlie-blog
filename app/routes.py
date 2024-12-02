@@ -39,35 +39,44 @@ def remove_post(post_id):
     return delete_post(post_id)
 
 # Auth
+# Log In
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     return login_helper()
 
+# Log Out
 @app.route('/logout')
 def logout():
     return logout_helper()
 
+# Register New User
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     return registration_helper()
 
+# Static Pages
+# About Page
 @app.route('/about')
 def about():
     return render_template("about.html", title="About")
 
+# Credits Page
 @app.route('/credits')
 def credits():
     return render_template("credits.html", title="Credits")
 
+# Contact Page
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     return contact_handler()
 
+# 404 Page
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
 
 # Functional routes
+# React to Posts
 @app.route('/post/<post_id>/like', methods=['POST'])
 @login_required
 def like_post(post_id):
@@ -78,6 +87,7 @@ def like_post(post_id):
 def dislike_post(post_id):
     return dislike_post_helper(post_id)
 
+# React to Comments
 @app.route('/comment/<comment_id>/like', methods=['POST'])
 @login_required
 def like_comment(comment_id):

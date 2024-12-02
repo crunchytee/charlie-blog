@@ -4,6 +4,7 @@ from flask_login import login_user, current_user, logout_user
 from app import db
 from app.forms import LoginForm, RegistrationForm
 from app.models import User
+from app.services.contact import send_email_external
 
 def login_helper():
     # Check if user is logged in. If so, take them to the homepage
@@ -47,6 +48,12 @@ def registration_helper():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
+        # Send email to new user
+        send_email_external(
+            body="Hey " + form.username.data + "! Thanks for registering for Charlie Blog!",
+            send_to_address=form.email.data,
+            subject="Charlie Blog Registration Confirmation"
+        )
         flash("Registration successful!")
         return redirect(url_for("login"))
     

@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from flask_login import UserMixin
 
+# User Database Model
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
@@ -23,6 +24,7 @@ class User(UserMixin, db.Model):
 def load_user(id):
     return User.query.get(int(id))
 
+# Post Database Model
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(300), nullable=False)
@@ -37,6 +39,7 @@ class Post(db.Model):
     def __repr__(self):
         return '<Post {}>'.format(self.body_html)
     
+# Comment Database Model
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
