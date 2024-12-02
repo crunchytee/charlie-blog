@@ -1,6 +1,6 @@
 # Project Charlie Blog
 
-#### This document written by TRB
+#### This document written by Tosh Roberts Brockway
 
 ## Installation
 
