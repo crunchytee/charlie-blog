@@ -5,6 +5,7 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_mail import Mail
 
+# Initial app set up. Sets up extensions as well
 app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
@@ -14,4 +15,5 @@ login.login_message = "Oops! You'll need to log in to do that"
 login.login_view = "login"
 mail = Mail(app)
 
+# This has to be here to avoid circular dependencies
 from app import routes, models
